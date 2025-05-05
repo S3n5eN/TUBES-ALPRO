@@ -7,4 +7,5 @@ func main(){
 	var jTidur, mTidur, jBangun, mBangun int
 	var aktivitas string
 	gdgdgdgg	
+	var kskoskm int
 }
