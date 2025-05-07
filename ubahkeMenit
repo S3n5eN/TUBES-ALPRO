@@ -1,0 +1,26 @@
+func durasi(A *tabTidur, n *int) {
+	var i, j int
+
+	for i = 0; i < *n; i++ {
+		j = i + 1
+		A[i].totalTidurMalam = (A[i].jTidurMalam * 60) + (A[i].mTidurMalam)
+		A[i].totalBangunMalam = (A[i].jBangunMalam * 60) + (A[i].mBangunMalam)
+
+		if A[i].totalBangunMalam < A[i].totalTidurMalam {
+			A[i].totalBangunMalam = A[i].totalBangunMalam + 24*60
+		}
+		A[i].selisihTidurMalam = A[i].totalBangunMalam - A[i].totalTidurMalam
+		A[i].durasiJamMalam = A[i].selisihTidurMalam / 60
+		A[i].durasiMenitMalam = A[i].selisihTidurMalam % 60
+
+		A[i].totalTidurSiang = (A[i].jTidurSiang * 60) + (A[i].mTidurSiang)
+		A[i].totalBangunSiang = (A[i].jBangunSiang * 60) + (A[i].mBangunSiang)
+		A[i].selisihTidurSiang = A[i].totalBangunSiang - A[i].totalTidurSiang
+		A[i].durasiJamSiang = A[i].selisihTidurSiang / 60
+		A[i].durasiMenitSiang = A[i].selisihTidurSiang % 60
+
+		fmt.Println("Pada Tanggal", j, " Anda Tidur Malam Selama ", A[i].durasiJamMalam, "jam ", A[i].durasiMenitMalam, " Menit")
+		fmt.Println("Pada Tanggal", j, " Anda Tidur Siang Selama ", A[i].durasiJamSiang, "jam ", A[i].durasiMenitSiang, " Menit")
+
+	}
+}
