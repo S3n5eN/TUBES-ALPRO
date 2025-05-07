@@ -1,4 +1,86 @@
-func main(){
+package main
 
+import "fmt"
+
+type jurnal struct {
+	jTidurSiang  int
+	mTidurSiang  int
+	jBangunSiang int
+	mBangunSiang int
+	jTidurMalam  int
+	mTidurMalam  int
+	jBangunMalam int
+	mBangunMalam int
+}
+type tabTidur [30]jurnal
+
+func pilih() {
+	fmt.Println("=========================================================================================================================================")
+	fmt.Println("Apa yang Ingin Anda Ketahui?")
+	fmt.Println("1.Ubah riwayat tidur")
+	fmt.Println("2.Saran Pola Tidur")
+	fmt.Println("3.Jam Tidur paling lama dan paling sebentar")
+	fmt.Println("4.Mencari data tidur pada hari ke-n")
+	fmt.Println("5.Mengurutkan riwayat tidur berdasarkan durasi selama 30 hari")
+	fmt.Println("6.Mengurutkan riwayat tidur berdasakan tanggal n ke n")
+	fmt.Println("7.Rekapitulasi riwayat tidur dalam 30 hari")
+	fmt.Println("8.Exit")
 
 }
+
+func main() {
+	var A tabTidur
+	var nama, pekerjaan string
+	var usia, bb, tb, durasi int
+	var milih int
+
+	fmt.Println("=========================================================================================================================================")
+	fmt.Println("						Selamat Datang di Aplikasi Atur Pola Tidur")
+	fmt.Println("=========================================================================================================================================")
+	fmt.Println("Silahkan Mengisi Form Terlebih dahulu")
+	fmt.Print("Nama: ")
+	fmt.Scan(&nama)
+	fmt.Print("Usia: ")
+	fmt.Scan(&usia)
+	fmt.Print("Berat Badan: ")
+	fmt.Scan(&bb)
+	fmt.Print("Tinggi Badan: ")
+	fmt.Scan(&tb)
+	fmt.Print("Aktivitas(Ringan/Sedang/Berat): ")
+	fmt.Scan(&pekerjaan)
+	fmt.Print("Durasi Olahraga dalam Seminggu(menit): ")
+	fmt.Scan(&durasi)
+	fmt.Println("=========================================================================================================================================")
+
+	for milih != 8 {
+		pilih()
+		fmt.Print("Silahkan Pilih(1/2/3/4/5/6/7/8): ")
+		fmt.Scan(&milih)
+
+		switch milih {
+
+		case 1:
+			fmt.Print("Program belum jadi kang")
+		case 2:
+			fmt.Print("Program belum jadi kang")
+		case 3:
+			fmt.Print("Program belum jadi kang")
+		case 4:
+			fmt.Print("Program belum jadi kang")
+		case 5:
+			fmt.Print("Program belum jadi kang")
+		case 6:
+			fmt.Print("Program belum jadi kang")
+		case 7:
+			fmt.Print("Program belum jadi kang")
+		case 8:
+
+		default:
+			fmt.Println("Pilihan Tidak valid,Silahkan coba lagi")
+
+		}
+
+	}
+
+}
+
