@@ -1,0 +1,264 @@
+package main
+
+import"fmt"
+type tidur struct{
+	jTidurMalam,mTidurMalam,jBangunMalam,mBangunMalam,jTidurSiang,mTidurSiang,jBangunSiang,mBangunSiang int
+
+}
+const NMAX int = 30
+type tabTidur[NMAX]tidur
+
+func main(){
+	var data tabTidur
+	var batas int
+	var perubahan string
+	fmt.Scan(&batas)
+	fmt.Scan( &perubahan)
+
+	isiJurnal(&data,&batas )
+
+	ubahJurnal(&data,  batas, perubahan)
+
+	for i := 0; i <NMAX; i++{
+		fmt.Print(data[i].jTidurSiang," ","\n")
+		fmt.Print(data[i].jTidurMalam," ")
+	}
+	
+	
+}
+
+
+
+func isiJurnal(A *tabTidur, n *int){
+/*I.S terdapat array kosong sebagai tempat untuk menyimpan durasi tidur
+F.S array durasi tidur terisi oleh jam tidur, menit tidur, jam bangun, menit bangun selama n hari */
+	
+	var i,j int
+	var tSiang bool
+	//pengondisian apabila n melebihi NMAX
+	if *n > NMAX{
+		*n = NMAX
+	}
+
+	for i = 0; i < *n; i++{
+		j = i+1
+		fmt.Println("Hari ke-", j )
+		fmt.Print("Apakah anda tidur siang?(true/false) ");fmt.Scan(&tSiang)
+
+		//Pengondisian apakah pengguna melakukan tidur siang atau tidak
+		
+		if tSiang == true{
+		//Tidur siang
+		fmt.Println("Silahkan isi jurnal dengan format (jam tidur siang, menit tidur siang, jam bangun siang, menit bangun siang)")
+		fmt.Scan(&A[i].jTidurSiang, &A[i].mTidurSiang, &A[i].jBangunSiang, &A[i].mBangunSiang)
+
+		//Tidur malam
+		fmt.Println("Silahkan isi jurnal dengan format (jam tidur malam, menit tidur malam, jam bangun malam, menit bangun malam)")
+		fmt.Scan(&A[i].jTidurMalam, &A[i].mTidurMalam, &A[i].jBangunMalam, &A[i].mBangunMalam)
+		}else if tSiang == false{
+			//Tidur malam
+		fmt.Println("Silahkan isi jurnal dengan format (jam tidur malam, menit tidur malam, jam bangun malam, menit bangun malam)")
+		fmt.Scan(&A[i].jTidurMalam, &A[i].mTidurMalam, &A[i].jBangunMalam, &A[i].mBangunMalam)	
+		}
+	}
+}
+
+func ubahJurnal(A *tabTidur, batas int, perubahan string){
+	/*I.S terdefinisi array waktu tidur ukuran array, dan jenis perubahan
+		proses
+		-input hari ke berapa yang ingin ditambah, dikurang, atau dirubah
+		-penambahan data dapat dilakukan apabila indeks yang terisi kurang dari NMAX 
+		-untuk bagian pengurangan hanya dapat mengurangkan 1 waktu tidur saja (ketika memilih tidur siang maka untuk false akan mengurangi tidur siang lagi)
+		-apabila ingin merubah data, pengguna dapat mengubah langsung pada urutan hari yang dituju
+	F.S jurnal berisi data yang telah dirubah*/
+	var tidur string
+	var stop bool 
+	var i, n int
+
+	if perubahan == "tambah"{			//apabila ingin menambahkan
+		fmt.Print("Hari ke berapa yang ingin ditambahkan? ");fmt.Scan(&n)
+		if n < NMAX{
+			fmt.Print("Apa yang ingin ditambahkan?(tidur siang(siang)/tidur malam(malam)) ");fmt.Scan(&tidur)
+			
+				if tidur == "siang"{
+
+					for stop == false && n <= NMAX{
+					fmt.Println("Hari ke-", n)
+					fmt.Println("Silahkan isi jurnal dengan format (jam tidur siang, menit tidur siang, jam bangun siang, menit bangun siang)")
+					fmt.Scan(&A[n-1].jTidurSiang, &A[n-1].mTidurSiang, &A[n-1].jBangunSiang, &A[n-1].mBangunSiang)
+					fmt.Println("Data berhasil ditambahkan :)")
+					fmt.Println("Apakah ingin berhenti?(true/false) ");fmt.Scan(&stop)
+					n++
+					}
+				}else if tidur == "malam"{
+
+					for stop == false && n <= NMAX{
+					fmt.Println("Hari ke-", n)
+					fmt.Println("Silahkan isi jurnal dengan format (jam tidur malam, menit tidur malam, jam bangun malam, menit bangun malam)")
+					fmt.Scan(&A[n-1].jTidurMalam, &A[n-1].mTidurMalam, &A[n-1].jBangunMalam, &A[n-1].mBangunMalam)
+					fmt.Println("Data berhasil ditambahkan :)")
+					fmt.Println("Apakah ingin berhenti?(true/false) ");fmt.Scan(&stop)
+					n++
+					}
+				}
+		}else{
+			fmt.Println("Tidak dapat menambahkan data")
+		}
+	}else if perubahan == "kurang"{		//Apabila ingin mengurangkan
+		fmt.Print("Hari ke berapa yang ingin dihapus? ");fmt.Scan(&n)
+		fmt.Print("Apa yang ingin dikurangi?(tidur siang(siang)/tidur malam(malam)) ");fmt.Scan(&tidur)
+		
+		if tidur == "siang"{
+			for stop == false{
+				for i = n-1; i < batas; i++{
+					if i+1 == batas{
+						A[i].jTidurSiang = 0
+						A[i].mTidurSiang = 0
+						A[i].jBangunSiang = 0
+						A[i].mBangunSiang = 0
+					}
+					A[i].jTidurSiang = A[i+1].jTidurSiang
+					A[i].mTidurSiang = A[i+1].mTidurSiang
+					A[i].jBangunSiang = A[i+1].jBangunSiang
+					A[i].mBangunSiang = A[i+1].mBangunSiang
+				}
+				fmt.Println("Data berhasil dikurangi :)")
+				fmt.Print("Apakah ingin berhenti?(true/false) ");fmt.Scan(&stop)
+				if stop == false{
+					fmt.Print("Hari ke berapa yang ingin dihapus? ");fmt.Scan(&n)
+				}
+			}
+		}else if tidur == "malam"{
+			for stop == false{
+				for i = n-1; i < batas; i++{
+					if i+1 == batas{
+						A[i].jTidurMalam = 0
+						A[i].mTidurMalam = 0
+						A[i].jBangunSiang = 0
+						A[i].mBangunSiang = 0
+					}
+					A[i].jTidurMalam = A[i+1].jTidurMalam
+					A[i].mTidurMalam = A[i+1].mTidurMalam
+					A[i].jBangunMalam = A[i+1].jBangunMalam
+					A[i].mBangunMalam = A[i+1].mBangunMalam
+				}
+				fmt.Println("Data berhasil dihapus :)")
+				fmt.Print("Apakah ingin berhenti?(true/false) ");fmt.Scan(&stop)
+				if stop == false{
+					fmt.Print("Hari ke berapa yang ingin dihapus? ");fmt.Scan(&n)
+				}
+			}
+		} 
+	}else if perubahan == "ubah"{								//apabila ingin merubah
+		fmt.Print("Hari ke berapa yang ingin dirubah? ");fmt.Scan(&n)
+		fmt.Print("Apa yang ingin dirubah?(tidur siang(siang)/tidur malam(malam)) ");fmt.Scan(&tidur)
+		
+		if tidur == "siang"{
+			for stop == false{
+				fmt.Println("Hari ke-", n)
+				fmt.Println("Silahkan isi jurnal dengan format (jam tidur siang, menit tidur siang, jam bangun siang, menit bangun siang)")
+					fmt.Scan(&A[n-1].jTidurSiang, &A[n-1].mTidurSiang, &A[n-1].jBangunSiang, &A[n-1].mBangunSiang)
+					fmt.Println("Data berhasil diubah :)")
+					fmt.Println("Apakah ingin berhenti?(true/false) ");fmt.Scan(&stop)
+					if stop == false{
+						fmt.Print("Hari ke berapa yang ingin dirubah? ");fmt.Scan(&n)
+					}
+			}
+		}else if tidur == "malam"{
+			for stop == false{
+				fmt.Println("Hari ke-", n)
+				fmt.Println("Silahkan isi jurnal dengan format (jam tidur malam, menit tidur malam, jam bangun malam, menit bangun malam)")
+					fmt.Scan(&A[n-1].jTidurMalam, &A[n-1].mTidurMalam, &A[n-1].jBangunMalam, &A[n-1].mBangunMalam)
+					fmt.Println("Data berhasil diubah :)")
+					fmt.Println("Apakah ingin berhenti?(true/false) ");fmt.Scan(&stop)
+					if stop == false{
+						fmt.Print("Hari ke berapa yang ingin dirubah? ");fmt.Scan(&n)
+					}
+			}
+		}
+	}
+	
+}
+
+func mencariDataTidur( A tabTidur, batas int, tgl int){
+	/*I.S terdefinisi Array yang merupakan jurnal riwayat tidur,banyaknya data 
+		yang terisi pada array, dan tanggal yang dicari datanya.
+		proses
+		-Pengguna dapat memilih ingin mencari dengan metode apa
+		-procedure mengeluarkan output riwayat tidur saat tanggal yang dicari
+	F.S mengeluarkan output riwayat tidur pada saat tanggal yang dicari*/
+	var i, idx int
+	var left, mid, right, nomor int
+	var banding bool
+
+	fmt.Print("Ingin mencari dengan metode apa?(Sequential(1)/Binary(2))");fmt.Scan(&nomor)
+
+	if nomor == 1{
+	//Pencarian dengan sequential search
+	for i = 0; i < batas; i++{
+		banding = i == tgl
+		if banding == true{
+			idx = i
+		}
+	}
+	}else if nomor == 2{
+
+	//Pencarian dengan binary search
+	left = 0
+	right = batas-1
+	for left <= right && banding == false{
+		mid = (left + right)/2
+		banding = mid == tgl
+		if banding == true{
+			idx = mid
+		}
+		if mid < tgl{
+			left = mid + 1
+		}else if mid > tgl{
+			right = mid -1
+		}
+	}
+	}
+	
+	//print riwayat tidur
+	fmt.Println("Jam Tidur Siang: ",A[idx].jTidurSiang," : ",A[idx].mTidurSiang," - ",A[idx].jBangunSiang," : ",A[idx].mBangunSiang)
+	fmt.Println("Jam Tidur Malam: ",A[idx].jTidurMalam," : ",A[idx].mTidurMalam," - ",A[idx].jBangunMalam," : ",A[idx].mBangunMalam)
+}
+
+func kaloriHarian(gender string, beratB, tinggiB int, usia int, banyakO int)int{
+	/*Fungsi untuk menghitung kalori Harian berdasarkan rumus BMR
+	- Untuk pria:
+		[ BMR = (10 * berat badan dalam kg) + (6.25 * tinggi badan dalam cm) - (5 * usia dalam tahun) + 5 ]
+	- Untuk wanita:
+		[ BMR = (10 * berat badan dalam kg) + (6.25 * tinggi badan dalam cm) - (5 * usia dalam tahun) - 161 ]
+	
+	dengan variabel yang diketahui
+	beratB = berat badan, tinggiB = tinggi badan, banyakO = banyak olahraga dalam seminggu*/
+
+	var kalori, BMR float64
+
+	if gender == "pria"{
+		BMR = (10.0 * float64(beratB)) + (6.25 * float64(tinggiB)) - (5.0 * float64(usia)) + 5.0
+	}else if gender == "wanita"{
+		BMR = (10.0 * float64(beratB)) + (6.25 * float64(tinggiB)) - (5.0 * float64(usia)) - 161.0
+	}
+	//swtich case untuk menghitung BMR dengan faktor pengali
+	switch banyakO{
+	case 1,2:
+		kalori = (BMR * 1.375)
+	case 3,4,5:
+		kalori = (BMR * 1.55)
+	case 6:
+		kalori = (BMR * 1.725)
+	case 7:
+		kalori = (BMR * 1.9) 
+	default:
+		kalori = (BMR * 1.2)
+	}
+	
+	return int(kalori)
+}
+
+
+
+
