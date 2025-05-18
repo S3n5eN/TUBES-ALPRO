@@ -196,7 +196,7 @@ func ubahJurnal(A *tabTidur, batas int, perubahan string){
 	F.S jurnal berisi data yang telah dirubah*/
 	var tidur string
 	var stop bool 
-	var i, n int
+	var  n int
 
 	if perubahan == "tambah"{			//apabila ingin menambahkan
 		fmt.Print("Hari ke berapa yang ingin ditambahkan? ");fmt.Scan(&n)
@@ -509,18 +509,18 @@ func urutTanggal(A tabTidur , n1 int , n2 int){
 	var i int
 	if n1 < n2{
 		for i = n1-1;i < n2;i++{
-		fmt.println("Hari ke-",i+1)
+		fmt.Println("Hari ke-",i+1)
 		fmt.Println(A[i].jTidurSiang,":",A[i].mTidurSiang,"-",A[i].jBangunSiang,":",A[i].mBangunSiang)
 		fmt.Println(A[i].jTidurMalam,":",A[i].mTidurMalam,"-",A[i].jBangunMalam,":",A[i].mBangunMalam)
 		}
 	}else if n1 > n2{
 		for i = n1-1;i > n2-1;i--{
-		fmt.println("Hari ke-",i+1)
+		fmt.Println("Hari ke-",i+1)
 		fmt.Println(A[i].jTidurSiang,":",A[i].mTidurSiang,"-",A[i].jBangunSiang,":",A[i].mBangunSiang)
 		fmt.Println(A[i].jTidurMalam,":",A[i].mTidurMalam,"-",A[i].jBangunMalam,":",A[i].mBangunMalam)
 		}
 	}else if n1 == n2{
-		fmt.println("Hari ke-",n1)
+		fmt.Println("Hari ke-",n1)
 		fmt.Println(A[n1].jTidurSiang,":",A[n1].mTidurSiang,"-",A[n1].jBangunSiang,":",A[n1].mBangunSiang)
 		fmt.Println(A[n1].jTidurMalam,":",A[n1].mTidurMalam,"-",A[n1].jBangunMalam,":",A[n1].mBangunMalam)
 	}
