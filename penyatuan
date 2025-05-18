@@ -81,7 +81,7 @@ func main() {
 
 		case 1:
 			fmt.Print("Ingin perubahan seperti apa? menambahkan(tambah), menghapus(hapus), merubah(ubah)");fmt.Scan(&perubahan)
-    ubahJurnal(&A, n, perubahan)
+    ubahJurnal(&A, &n, perubahan)
 		case 2:
 			durasi(&A, &n)
 			saran(&A, n)
@@ -186,7 +186,7 @@ func pilih() {
 }
 
         //prosedur untuk melakukan perubahan (menambahkan, menghapus,mengurangkan) pada jurnal
-func ubahJurnal(A *tabTidur, batas int, perubahan string){
+func ubahJurnal(A *tabTidur, batas *int, perubahan string){
 	/*I.S terdefinisi array waktu tidur, ukuran array, dan jenis perubahan
 		proses
 		-input hari ke berapa yang ingin ditambah, dikurang, atau dirubah
@@ -213,6 +213,7 @@ func ubahJurnal(A *tabTidur, batas int, perubahan string){
 					fmt.Println("Apakah ingin berhenti?(true/false) ");fmt.Scan(&stop)
 					n++
 					}
+					*batas = n
 				}else if tidur == "malam"{
 
 					for stop == false && n <= NMAX{
@@ -223,6 +224,7 @@ func ubahJurnal(A *tabTidur, batas int, perubahan string){
 					fmt.Println("Apakah ingin berhenti?(true/false) ");fmt.Scan(&stop)
 					n++
 					}
+					*batas = n
 				}
 		}else{
 			fmt.Println("Tidak dapat menambahkan data")
@@ -396,7 +398,7 @@ func mencariDataTidur( A tabTidur, batas int, tgl int){
 	if nomor == 1{
 	//Pencarian dengan sequential search
 	for i = 0; i < batas; i++{
-		banding = i == tgl
+		banding = i == tgl-1
 		if banding == true{
 			idx = i
 		}
@@ -408,13 +410,13 @@ func mencariDataTidur( A tabTidur, batas int, tgl int){
 	right = batas-1
 	for left <= right && banding == false{
 		mid = (left + right)/2
-		banding = mid == tgl
+		banding = mid == tgl-1
 		if banding == true{
 			idx = mid
 		}
-		if mid < tgl{
+		if mid < tgl-1{
 			left = mid + 1
-		}else if mid > tgl{
+		}else if mid > tgl-1{
 			right = mid -1
 		}
 	}
@@ -514,7 +516,7 @@ func urutTanggal(A tabTidur , n1 int , n2 int){
 		fmt.Println(A[i].jTidurMalam,":",A[i].mTidurMalam,"-",A[i].jBangunMalam,":",A[i].mBangunMalam)
 		}
 	}else if n1 > n2{
-		for i = n1-1;i > n2-1;i--{
+		for i = n1-1;i >= n2-1;i--{
 		fmt.Println("Hari ke-",i+1)
 		fmt.Println(A[i].jTidurSiang,":",A[i].mTidurSiang,"-",A[i].jBangunSiang,":",A[i].mBangunSiang)
 		fmt.Println(A[i].jTidurMalam,":",A[i].mTidurMalam,"-",A[i].jBangunMalam,":",A[i].mBangunMalam)
