@@ -1,0 +1,566 @@
+package main
+
+import "fmt"
+
+const NMAX int = 30
+
+type jurnal struct {
+	jTidurSiang       int
+	mTidurSiang       int
+	jBangunSiang      int
+	mBangunSiang      int
+	jTidurMalam       int
+	mTidurMalam       int
+	jBangunMalam      int
+	mBangunMalam      int
+	totalTidurMalam   int
+	totalBangunMalam  int
+	totalTidurSiang   int
+	totalBangunSiang  int
+	selisihTidurSiang int
+	selisihTidurMalam int
+	durasiJamSiang    int
+	durasiMenitSiang  int
+	durasiJamMalam    int
+	durasiMenitMalam  int
+	totalJamTidur     int
+	totalMenitTidur   int
+	kurangJamTidur    int
+	kurangMenitTidur  int
+	kurangTidur       int
+	totalTidur        int
+	descending        int
+	ascending         int
+	hari              int
+}
+type tabTidur [NMAX]jurnal
+
+//func main
+func main() {
+	var A tabTidur
+	var nama, pekerjaan string
+	var usia, bb, tb int
+	var milih, durasio int
+	var n int
+	var tgl, tgl1, tgl2 int
+	var urut string
+	var maxmin string
+	var perubahan string
+
+	fmt.Println("=========================================================================================================================================")
+	fmt.Println("\t\t\t\t\tSelamat Datang di Aplikasi Atur Pola Tidur")
+	fmt.Println("=========================================================================================================================================")
+	fmt.Println("Silahkan Mengisi Form Terlebih dahulu")
+	fmt.Print("Nama: ")
+	fmt.Scan(&nama)
+	fmt.Print("Usia: ")
+	fmt.Scan(&usia)
+	fmt.Print("Berat Badan: ")
+	fmt.Scan(&bb)
+	fmt.Print("Tinggi Badan: ")
+	fmt.Scan(&tb)
+	fmt.Print("Aktivitas(Ringan/Sedang/Berat): ")
+	fmt.Scan(&pekerjaan)
+	fmt.Print("Durasi Olahraga dalam Seminggu(menit): ")
+	fmt.Scan(&durasio)
+	fmt.Println("=========================================================================================================================================")
+
+	fmt.Println("Silahkan Masukkan Pola tidur Anda dalam n hari(Maks 30 Hari)")
+	fmt.Print("Silahkan Masukkan n hari: ")
+	fmt.Scan(&n)
+
+	//pengisian jurnal
+	isiJurnal(&A, &n)
+
+	//bagian pemilihan apa yang ingin ditampilkan
+	for milih != 9 {
+		pilih()
+		fmt.Print("Silahkan Pilih(1/2/3/4/5/6/7/8/9): ")
+		fmt.Scan(&milih)
+
+		switch milih {
+
+		case 1:
+			fmt.Print("Ingin perubahan seperti apa? menambahkan(tambah), menghapus(hapus), merubah(ubah)")
+			fmt.Scan(&perubahan)
+			ubahJurnal(&A, &n, perubahan)
+		case 2:
+			durasi(&A, &n)
+			saran(&A, n)
+		case 3:
+			fmt.Print("tercepat atau terlama?: ")
+			fmt.Scan(&maxmin)
+			if maxmin == "tercepat" || maxmin == "Tercepat" {
+				min(&A, n)
+			} else {
+				max(&A, n)
+			}
+		case 4:
+			fmt.Print("Masukan tanggal yang ingin dicari")
+			fmt.Scan(&tgl)
+			mencariDataTidur(A, n, tgl)
+		case 5:
+			fmt.Print("Ascending/Descending?: ")
+			fmt.Scan(&urut)
+
+			if urut == "Descending" || urut == "descending" {
+				durasi(&A, &n)
+				descending(&A, n)
+				printdescending(&A, n)
+			} else {
+				durasi(&A, &n)
+				ascending(&A, n)
+				printascending(&A, n)
+			}
+
+		case 6:
+			fmt.Print("Ingin mengurutkan dari tanggal berapa sampai tanggal berapa? ")
+			fmt.Scan(&tgl1, &tgl2)
+			urutTanggal(A, tgl1, tgl2)
+		case 7:
+			durasi(&A, &n)
+			printDurasi(A, n)
+		case 8:
+			if n == 30 {
+				durasi(&A, &n)
+			} else {
+				fmt.Println("Mohon Maaf,Data yang anda masukkan kurang dari 30 hari,silahkan pilih no-1 untuk menambah riwayat Tidur")
+			}
+
+		case 9:
+
+		default:
+			fmt.Println("Pilihan Tidak valid,Silahkan coba lagi")
+
+		}
+
+	}
+
+}
+
+//prosedur untuk pengisian jurnal
+func isiJurnal(A *tabTidur, n *int) {
+	/*I.S terdapat array kosong sebagai tempat untuk menyimpan durasi tidur
+	  F.S array durasi tidur terisi oleh jam tidur, menit tidur, jam bangun, menit bangun selama n hari */
+
+	var i int
+	var tSiang bool
+	//pengondisian apabila n melebihi NMAX
+	if *n > NMAX {
+		*n = NMAX
+	}
+
+	for i = 0; i < *n; i++ {
+		A[i].hari = i + 1
+		fmt.Println("Hari ke-", A[i].hari)
+		fmt.Print("Apakah anda tidur siang?(true/false) ")
+		fmt.Scan(&tSiang)
+
+		//Pengondisian apakah pengguna melakukan tidur siang atau tidak
+
+		if tSiang == true {
+			//Tidur siang
+			fmt.Println("Silahkan isi jurnal dengan format (jam tidur siang, menit tidur siang, jam bangun siang, menit bangun siang)")
+			fmt.Scan(&A[i].jTidurSiang, &A[i].mTidurSiang, &A[i].jBangunSiang, &A[i].mBangunSiang)
+
+			//Tidur malam
+			fmt.Println("Silahkan isi jurnal dengan format (jam tidur malam, menit tidur malam, jam bangun malam, menit bangun malam)")
+			fmt.Scan(&A[i].jTidurMalam, &A[i].mTidurMalam, &A[i].jBangunMalam, &A[i].mBangunMalam)
+		} else if tSiang == false {
+			//Tidur malam
+			fmt.Println("Silahkan isi jurnal dengan format (jam tidur malam, menit tidur malam, jam bangun malam, menit bangun malam)")
+			fmt.Scan(&A[i].jTidurMalam, &A[i].mTidurMalam, &A[i].jBangunMalam, &A[i].mBangunMalam)
+		}
+	}
+}
+
+//subprogram yang menampilkan pilihan yang akan ditampilkan
+func pilih() {
+	fmt.Println("=========================================================================================================================================")
+	fmt.Println("Apa yang Ingin Anda Ketahui?")
+	fmt.Println("1.Ubah riwayat tidur")
+	fmt.Println("2.Saran Pola Tidur")
+	fmt.Println("3.Jam Tidur paling lama dan paling sebentar")
+	fmt.Println("4.Mencari data tidur pada hari ke-n")
+	fmt.Println("5.Mengurutkan riwayat tidur berdasarkan durasi selama n hari")
+	fmt.Println("6.Mengurutkan riwayat tidur berdasakan tanggal n ke n")
+	fmt.Println("7.Rekapitulasi riwayat tidur dalam n hari")
+	fmt.Println("8.Rekapitulasi riwayat tidur dalam 30 hari")
+	fmt.Println("0.Exit")
+
+}
+
+//prosedur untuk melakukan perubahan (menambahkan, menghapus,mengurangkan) pada jurnal
+func ubahJurnal(A *tabTidur, batas *int, perubahan string) {
+	/*I.S terdefinisi array waktu tidur, ukuran array, dan jenis perubahan
+		proses
+		-input hari ke berapa yang ingin ditambah, dikurang, atau dirubah
+		-penambahan data dapat dilakukan apabila indeks yang terisi kurang dari NMAX
+		-untuk bagian pengurangan hanya dapat mengurangkan 1 waktu tidur saja (ketika memilih tidur siang maka untuk false akan mengurangi tidur siang lagi)
+		-apabila ingin merubah data, pengguna dapat mengubah langsung pada urutan hari yang dituju
+	F.S jurnal berisi data yang telah dirubah*/
+	var tidur string
+	var stop bool
+	var n int
+
+	if perubahan == "tambah" { //apabila ingin menambahkan
+		fmt.Print("Hari ke berapa yang ingin ditambahkan? ")
+		fmt.Scan(&n)
+		if n < NMAX {
+			fmt.Print("Apa yang ingin ditambahkan?(tidur siang(siang)/tidur malam(malam)) ")
+			fmt.Scan(&tidur)
+
+			if tidur == "siang" {
+
+				for stop == false && n <= NMAX {
+					fmt.Println("Hari ke-", n)
+					fmt.Println("Silahkan isi jurnal dengan format (jam tidur siang menit tidur siang jam bangun siang menit bangun siang)")
+					fmt.Scan(&A[n-1].jTidurSiang, &A[n-1].mTidurSiang, &A[n-1].jBangunSiang, &A[n-1].mBangunSiang)
+					fmt.Println("Data berhasil ditambahkan :)")
+					fmt.Println("Apakah ingin berhenti?(true/false) ")
+					fmt.Scan(&stop)
+					*batas = n
+					n++
+				}
+
+			} else if tidur == "malam" {
+
+				for stop == false && n <= NMAX {
+					fmt.Println("Hari ke-", n)
+					fmt.Println("Silahkan isi jurnal dengan format (jam tidur malam menit tidur malam jam bangun malam menit bangun malam)")
+					fmt.Scan(&A[n-1].jTidurMalam, &A[n-1].mTidurMalam, &A[n-1].jBangunMalam, &A[n-1].mBangunMalam)
+					fmt.Println("Data berhasil ditambahkan :)")
+					fmt.Println("Apakah ingin berhenti?(true/false) ")
+					fmt.Scan(&stop)
+					*batas = n
+					n++
+				}
+
+			}
+		} else {
+			fmt.Println("Tidak dapat menambahkan data")
+		}
+	} else if perubahan == "hapus" { //Apabila ingin menghapuskan
+		fmt.Print("Hari ke berapa yang ingin dihapus? ")
+		fmt.Scan(&n)
+		fmt.Print("Apa yang ingin dihapus?(tidur siang(siang)/tidur malam(malam)) ")
+		fmt.Scan(&tidur)
+
+		if tidur == "siang" {
+			for stop == false {
+				A[n-1].jTidurSiang = 0
+				A[n-1].mTidurSiang = 0
+				A[n-1].jBangunSiang = 0
+				A[n-1].mBangunSiang = 0
+				fmt.Println("Data berhasil dihapus :)")
+				fmt.Print("Apakah ingin berhenti?(true/false) ")
+				fmt.Scan(&stop)
+				if stop == false {
+					fmt.Print("Hari ke berapa yang ingin dihapus? ")
+					fmt.Scan(&n)
+				}
+			}
+		} else if tidur == "malam" {
+			for stop == false {
+				A[n-1].jTidurMalam = 0
+				A[n-1].mTidurMalam = 0
+				A[n-1].jBangunMalam = 0
+				A[n-1].mBangunMalam = 0
+				fmt.Println("Data berhasil dihapus :)")
+				fmt.Print("Apakah ingin berhenti?(true/false) ")
+				fmt.Scan(&stop)
+				if stop == false {
+					fmt.Print("Hari ke berapa yang ingin dihapus? ")
+					fmt.Scan(&n)
+				}
+			}
+		}
+	} else if perubahan == "ubah" { //apabila ingin merubah
+		fmt.Print("Hari ke berapa yang ingin dirubah? ")
+		fmt.Scan(&n)
+		fmt.Print("Apa yang ingin dirubah?(tidur siang(siang)/tidur malam(malam)) ")
+		fmt.Scan(&tidur)
+
+		if tidur == "siang" {
+			for stop == false {
+				fmt.Println("Hari ke-", n)
+				fmt.Println("Silahkan isi jurnal dengan format (jam tidur siang menit tidur siang jam bangun siang menit bangun siang)")
+				fmt.Scan(&A[n-1].jTidurSiang, &A[n-1].mTidurSiang, &A[n-1].jBangunSiang, &A[n-1].mBangunSiang)
+				fmt.Println("Data berhasil diubah :)")
+				fmt.Println("Apakah ingin berhenti?(true/false) ")
+				fmt.Scan(&stop)
+				if stop == false {
+					fmt.Print("Hari ke berapa yang ingin dirubah? ")
+					fmt.Scan(&n)
+				}
+			}
+		} else if tidur == "malam" {
+			for stop == false {
+				fmt.Println("Hari ke-", n)
+				fmt.Println("Silahkan isi jurnal dengan format (jam tidur malam, menit tidur malam, jam bangun malam, menit bangun malam)")
+				fmt.Scan(&A[n-1].jTidurMalam, &A[n-1].mTidurMalam, &A[n-1].jBangunMalam, &A[n-1].mBangunMalam)
+				fmt.Println("Data berhasil diubah :)")
+				fmt.Println("Apakah ingin berhenti?(true/false) ")
+				fmt.Scan(&stop)
+				if stop == false {
+					fmt.Print("Hari ke berapa yang ingin dirubah? ")
+					fmt.Scan(&n)
+				}
+			}
+		}
+	}
+
+}
+
+//subprogram untuk menampilkan saran pola tidur
+func durasi(A *tabTidur, n *int) {
+	var i int
+
+	for i = 0; i < *n; i++ {
+
+		A[i].totalTidurMalam = (A[i].jTidurMalam * 60) + (A[i].mTidurMalam)
+		A[i].totalBangunMalam = (A[i].jBangunMalam * 60) + (A[i].mBangunMalam)
+
+		if A[i].totalBangunMalam < A[i].totalTidurMalam {
+			A[i].totalBangunMalam = A[i].totalBangunMalam + 24*60
+		}
+		A[i].selisihTidurMalam = A[i].totalBangunMalam - A[i].totalTidurMalam
+		A[i].durasiJamMalam = A[i].selisihTidurMalam / 60
+		A[i].durasiMenitMalam = A[i].selisihTidurMalam % 60
+
+		A[i].totalTidurSiang = (A[i].jTidurSiang * 60) + (A[i].mTidurSiang)
+		A[i].totalBangunSiang = (A[i].jBangunSiang * 60) + (A[i].mBangunSiang)
+		A[i].selisihTidurSiang = A[i].totalBangunSiang - A[i].totalTidurSiang
+		A[i].durasiJamSiang = A[i].selisihTidurSiang / 60
+		A[i].durasiMenitSiang = A[i].selisihTidurSiang % 60
+
+	}
+}
+
+func saran(A *tabTidur, n int) {
+	var i int
+	var j int
+
+	var kurangTidurr int = 0
+
+	for i = 0; i < n; i++ {
+		j = i + 1
+		A[i].totalJamTidur = A[i].durasiJamMalam + A[i].durasiJamSiang
+		A[i].totalMenitTidur = A[i].durasiMenitMalam + A[i].durasiMenitSiang
+		if A[i].totalMenitTidur >= 60 {
+			A[i].totalJamTidur = A[i].totalJamTidur + 1
+		}
+		if A[i].totalJamTidur < 6 {
+			kurangTidurr = kurangTidurr + 1
+			A[i].kurangTidur = (6 * 60) - (A[i].selisihTidurMalam + A[i].selisihTidurSiang)
+			A[i].kurangJamTidur = A[i].kurangTidur / 60
+			A[i].kurangMenitTidur = A[i].kurangTidur % 60
+
+			fmt.Println("Pada Tanggal ", j, "Anda kurang tidur selama ", A[i].kurangJamTidur, " jam ", A[i].kurangMenitTidur, "menit")
+		}
+	}
+
+	fmt.Println("Berdasarkan Data diatas, Anda kurang tidur sebanyak", kurangTidurr, " hari")
+
+	if kurangTidurr > 0 {
+		fmt.Println("Ayo perbaiki pola tidur anda")
+	}
+	if kurangTidurr == 0 {
+		fmt.Println("Durasi Tidur Anda Cukup,Ayo pertahankan!")
+	}
+
+}
+
+//subprogram untuk menampilkan waktu tidur tercepat atau terlama
+func min(A *tabTidur, n int) {
+	var i, idxMin, minDurasi int
+	minDurasi = A[0].selisihTidurSiang + A[0].selisihTidurMalam
+	idxMin = 0
+
+	for i = 1; i < n; i++ {
+		total := A[i].selisihTidurSiang + A[i].selisihTidurMalam
+		if total < minDurasi {
+			minDurasi = total
+			idxMin = i
+		}
+	}
+	fmt.Println("Anda tidur paling cepat pada hari ke-", A[idxMin].hari,
+		"selama", minDurasi/60, "jam", minDurasi%60, "menit")
+}
+
+func max(A *tabTidur, n int) {
+	var i, idxMax, maxDurasi int
+	maxDurasi = A[0].selisihTidurSiang + A[0].selisihTidurMalam
+	idxMax = 0
+
+	for i = 1; i < n; i++ {
+		total := A[i].selisihTidurSiang + A[i].selisihTidurMalam
+		if total > maxDurasi {
+			maxDurasi = total
+			idxMax = i
+		}
+	}
+	fmt.Println("Anda tidur paling lama pada hari ke-", A[idxMax].hari,
+		"selama", maxDurasi/60, "jam", maxDurasi%60, "menit")
+}
+
+//prosedur untuk mencari data durasi tidur pada hari ke-n
+func mencariDataTidur(A tabTidur, batas int, tgl int) {
+	/*I.S terdefinisi Array yang merupakan jurnal riwayat tidur,banyaknya data
+		yang terisi pada array, dan tanggal yang dicari datanya.
+		proses
+		-Pengguna dapat memilih ingin mencari dengan metode apa
+		-procedure mengeluarkan output riwayat tidur saat tanggal yang dicari
+	F.S mengeluarkan output riwayat tidur pada saat tanggal yang dicari*/
+	var i, idx int
+	var left, mid, right, nomor int
+	var banding bool
+
+	fmt.Print("Ingin mencari dengan metode apa?(Sequential(1)/Binary(2))")
+	fmt.Scan(&nomor)
+
+	if nomor == 1 {
+		//Pencarian dengan sequential search
+		for i = 0; i < batas; i++ {
+			banding = i == tgl-1
+			if banding == true {
+				idx = i
+			}
+		}
+	} else if nomor == 2 {
+
+		//Pencarian dengan binary search
+		left = 0
+		right = batas - 1
+		for left <= right && banding == false {
+			mid = (left + right) / 2
+			banding = mid == tgl-1
+			if banding == true {
+				idx = mid
+			}
+			if mid < tgl-1 {
+				left = mid + 1
+			} else if mid > tgl-1 {
+				right = mid - 1
+			}
+		}
+	}
+
+	//print riwayat tidur
+	fmt.Println("Jam Tidur Siang: ", A[idx].jTidurSiang, " : ", A[idx].mTidurSiang, " - ", A[idx].jBangunSiang, " : ", A[idx].mBangunSiang)
+	fmt.Println("Jam Tidur Malam: ", A[idx].jTidurMalam, " : ", A[idx].mTidurMalam, " - ", A[idx].jBangunMalam, " : ", A[idx].mBangunMalam)
+
+}
+
+//subprogram untuk mengurutkan berdasarkan durasi tidur
+func descending(A *tabTidur, n int) {
+	var pass, idx, i int
+	var temp jurnal
+
+	for i = 0; i < n; i++ {
+
+		A[i].descending = A[i].selisihTidurSiang + A[i].selisihTidurMalam
+
+	}
+	pass = 1
+
+	for pass <= n-1 {
+		idx = pass - 1
+		i = pass
+		for i < n {
+			if A[idx].descending < A[i].descending {
+				idx = i
+			}
+			i = i + 1
+		}
+		temp = A[pass-1]
+		A[pass-1] = A[idx]
+		A[idx] = temp
+		pass = pass + 1
+	}
+}
+
+func printdescending(A *tabTidur, n int) {
+	var i int
+	for i = 0; i < n; i++ {
+
+		fmt.Println("pada hari ke-", A[i].hari, "Anda tidur selama ", A[i].descending/60, " jam", A[i].descending%60, " menit")
+	}
+}
+
+func ascending(A *tabTidur, n int) {
+	var pass, idx, i int
+	var temp jurnal
+
+	for i = 0; i < n; i++ {
+
+		A[i].ascending = A[i].selisihTidurSiang + A[i].selisihTidurMalam
+
+	}
+	pass = 1
+
+	for pass <= n-1 {
+		idx = pass - 1
+		i = pass
+		for i < n {
+			if A[idx].ascending > A[i].ascending {
+				idx = i
+			}
+			i = i + 1
+		}
+		temp = A[pass-1]
+		A[pass-1] = A[idx]
+		A[idx] = temp
+
+		pass = pass + 1
+
+	}
+}
+
+func printascending(A *tabTidur, n int) {
+	var i int
+	for i = 0; i < n; i++ {
+
+		fmt.Println("pada hari ke-", A[i].hari, "Anda tidur selama ", A[i].ascending/60, " jam", A[i].ascending%60, " menit")
+	}
+}
+
+//prosedur untuk mengurutkan berdasarkan tanggal dari n ke n
+func urutTanggal(A tabTidur, n1 int, n2 int) {
+	/*I.S terdefinisi array jurnal tidur yang sudah terisi, tanggal awal(n1) dan tanggal akhir(n2)
+		proses:
+		-apabila n1 < n2 maka diurutkan secara ascending
+		-apabila n1 > n2 maka diurutkan secara descending
+	F.S Mencetak data pada jurnal tidur dari tanggal awal sampai tanggal akhir*/
+	var i int
+	if n1 < n2 {
+		for i = n1 - 1; i < n2; i++ {
+			fmt.Println("Hari ke-", i+1)
+			fmt.Println(A[i].jTidurSiang, ":", A[i].mTidurSiang, "-", A[i].jBangunSiang, ":", A[i].mBangunSiang)
+			fmt.Println(A[i].jTidurMalam, ":", A[i].mTidurMalam, "-", A[i].jBangunMalam, ":", A[i].mBangunMalam)
+		}
+	} else if n1 > n2 {
+		for i = n1 - 1; i >= n2-1; i-- {
+			fmt.Println("Hari ke-", i+1)
+			fmt.Println(A[i].jTidurSiang, ":", A[i].mTidurSiang, "-", A[i].jBangunSiang, ":", A[i].mBangunSiang)
+			fmt.Println(A[i].jTidurMalam, ":", A[i].mTidurMalam, "-", A[i].jBangunMalam, ":", A[i].mBangunMalam)
+		}
+	} else if n1 == n2 {
+		fmt.Println("Hari ke-", n1)
+		fmt.Println(A[n1].jTidurSiang, ":", A[n1].mTidurSiang, "-", A[n1].jBangunSiang, ":", A[n1].mBangunSiang)
+		fmt.Println(A[n1].jTidurMalam, ":", A[n1].mTidurMalam, "-", A[n1].jBangunMalam, ":", A[n1].mBangunMalam)
+	}
+}
+
+//prosedur untuk rekapitulasi durasi tidur selama n hari
+func printDurasi(A tabTidur, n int) {
+	var i int
+	for i = 0; i < n; i++ {
+		A[i].hari = i + 1
+
+		fmt.Println("Pada Tanggal", A[i].hari, " Anda Tidur Malam Selama ", A[i].durasiJamMalam, "jam ", A[i].durasiMenitMalam, " Menit")
+		fmt.Println("Pada Tanggal", A[i].hari, " Anda Tidur Siang Selama ", A[i].durasiJamSiang, "jam ", A[i].durasiMenitSiang, " Menit")
+		fmt.Println()
+	}
+
+}
