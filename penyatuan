@@ -199,35 +199,30 @@ func ubahJurnal(A *tabTidur, batas *int, perubahan string){
 	var  n int
 
 	if perubahan == "tambah"{			//apabila ingin menambahkan
+		for stop == false && n <= NMAX{
 		fmt.Print("Hari ke berapa yang ingin ditambahkan? ");fmt.Scan(&n)
-		if n < NMAX{
 			fmt.Print("Apa yang ingin ditambahkan?(tidur siang(siang)/tidur malam(malam)) ");fmt.Scan(&tidur)
 			
 				if tidur == "siang"{
 
-					for stop == false && n <= NMAX{
 					fmt.Println("Hari ke-", n)
 					fmt.Println("Silahkan isi jurnal dengan format (jam tidur siang menit tidur siang jam bangun siang menit bangun siang)")
 					fmt.Scan(&A[n-1].jTidurSiang, &A[n-1].mTidurSiang, &A[n-1].jBangunSiang, &A[n-1].mBangunSiang)
+					*batas = n
 					fmt.Println("Data berhasil ditambahkan :)")
 					fmt.Println("Apakah ingin berhenti?(true/false) ");fmt.Scan(&stop)
-					n++
-					}
-					*batas = n
+					
 				}else if tidur == "malam"{
 
-					for stop == false && n <= NMAX{
 					fmt.Println("Hari ke-", n)
 					fmt.Println("Silahkan isi jurnal dengan format (jam tidur malam menit tidur malam jam bangun malam menit bangun malam)")
 					fmt.Scan(&A[n-1].jTidurMalam, &A[n-1].mTidurMalam, &A[n-1].jBangunMalam, &A[n-1].mBangunMalam)
+					*batas = n
 					fmt.Println("Data berhasil ditambahkan :)")
 					fmt.Println("Apakah ingin berhenti?(true/false) ");fmt.Scan(&stop)
-					n++
-					}
-					*batas = n
+					
 				}
-		}else{
-			fmt.Println("Tidak dapat menambahkan data")
+		
 		}
 	}else if perubahan == "hapus"{		//Apabila ingin menghapuskan
 		fmt.Print("Hari ke berapa yang ingin dihapus? ");fmt.Scan(&n)
