@@ -119,3 +119,60 @@ func ubahJurnal(A *tabTidur, batas *int, perubahan string){
 	}
 	
 }
+
+func mencariDataTidur( A tabTidur, batas int, tgl int){
+	/*I.S terdefinisi Array yang merupakan jurnal riwayat tidur,banyaknya data 
+		yang terisi pada array, dan tanggal yang dicari datanya.
+		proses
+		-Pengguna dapat memilih ingin mencari dengan metode apa
+		-procedure mengeluarkan output riwayat tidur saat tanggal yang dicari
+	F.S mengeluarkan output riwayat tidur pada saat tanggal yang dicari*/
+	var i, idx int
+	var left, mid, right, nomor int
+	var banding bool
+	idx = -1
+
+	
+	fmt.Print("Ingin mencari dengan metode apa?(Sequential(1)/Binary(2))");fmt.Scan(&nomor)
+
+	if nomor == 1{
+	//Pencarian dengan sequential search
+	i = 0
+	for i < batas && idx == -1{
+		banding = i == tgl-1
+		if banding == true{
+			idx = i
+		}
+		i++
+	}
+	}else if nomor == 2{
+
+	//Pencarian dengan binary search
+	left = 0
+	right = batas-1
+	for left <= right && idx == -1{
+		mid = (left + right)/2
+		banding = mid == tgl-1
+		if banding == true{
+			idx = mid
+		}
+		if mid < tgl-1{
+			left = mid + 1
+		}else if mid > tgl-1{
+			right = mid -1
+		}
+	}
+	}
+
+	
+	if idx == -1{
+		fmt.Println("Data Tidak Ditemukan :(")
+	}else{
+	//print riwayat tidur
+	fmt.Println("Jam Tidur Siang: ",A[idx].jTidurSiang," : ",A[idx].mTidurSiang," - ",A[idx].jBangunSiang," : ",A[idx].mBangunSiang)
+	fmt.Println("Jam Tidur Malam: ",A[idx].jTidurMalam," : ",A[idx].mTidurMalam," - ",A[idx].jBangunMalam," : ",A[idx].mBangunMalam)
+	}
+
+	
+	
+}
