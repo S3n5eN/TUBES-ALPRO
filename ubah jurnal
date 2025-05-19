@@ -1,0 +1,97 @@
+func ubahJurnal(A *tabTidur, batas *int, perubahan string){
+	/*I.S terdefinisi array waktu tidur, ukuran array, dan jenis perubahan
+		proses
+		-input hari ke berapa yang ingin ditambah, dikurang, atau dirubah
+		-penambahan data dapat dilakukan apabila indeks yang terisi kurang dari NMAX 
+		-untuk bagian pengurangan hanya dapat mengurangkan 1 waktu tidur saja (ketika memilih tidur siang maka untuk false akan mengurangi tidur siang lagi)
+		-apabila ingin merubah data, pengguna dapat mengubah langsung pada urutan hari yang dituju
+	F.S jurnal berisi data yang telah dirubah*/
+	var tidur string
+	var stop bool 
+	var  n int
+
+	if perubahan == "tambah"{			//apabila ingin menambahkan
+		for stop == false && n <= NMAX{
+		fmt.Print("Hari ke berapa yang ingin ditambahkan? ");fmt.Scan(&n)
+			fmt.Print("Apa yang ingin ditambahkan?(tidur siang(siang)/tidur malam(malam)) ");fmt.Scan(&tidur)
+			
+				if tidur == "siang"{
+
+					fmt.Println("Hari ke-", n)
+					fmt.Println("Silahkan isi jurnal dengan format (jam tidur siang menit tidur siang jam bangun siang menit bangun siang)")
+					fmt.Scan(&A[n-1].jTidurSiang, &A[n-1].mTidurSiang, &A[n-1].jBangunSiang, &A[n-1].mBangunSiang)
+					*batas = n
+					fmt.Println("Data berhasil ditambahkan :)")
+					fmt.Println("Apakah ingin berhenti?(true/false) ");fmt.Scan(&stop)
+					
+				}else if tidur == "malam"{
+
+					fmt.Println("Hari ke-", n)
+					fmt.Println("Silahkan isi jurnal dengan format (jam tidur malam menit tidur malam jam bangun malam menit bangun malam)")
+					fmt.Scan(&A[n-1].jTidurMalam, &A[n-1].mTidurMalam, &A[n-1].jBangunMalam, &A[n-1].mBangunMalam)
+					*batas = n
+					fmt.Println("Data berhasil ditambahkan :)")
+					fmt.Println("Apakah ingin berhenti?(true/false) ");fmt.Scan(&stop)
+					
+				}
+		
+		}
+	}else if perubahan == "hapus"{		//Apabila ingin menghapuskan
+		fmt.Print("Hari ke berapa yang ingin dihapus? ");fmt.Scan(&n)
+		fmt.Print("Apa yang ingin dihapus?(tidur siang(siang)/tidur malam(malam)) ");fmt.Scan(&tidur)
+		
+		if tidur == "siang"{
+			for stop == false{
+				A[n-1].jTidurSiang = 0
+				A[n-1].mTidurSiang = 0
+				A[n-1].jBangunSiang = 0
+				A[n-1].mBangunSiang = 0
+				fmt.Println("Data berhasil dihapus :)")
+				fmt.Print("Apakah ingin berhenti?(true/false) ");fmt.Scan(&stop)
+				if stop == false{
+					fmt.Print("Hari ke berapa yang ingin dihapus? ");fmt.Scan(&n)
+				}
+			}
+		}else if tidur == "malam"{
+			for stop == false{
+				A[n-1].jTidurMalam = 0
+				A[n-1].mTidurMalam = 0
+				A[n-1].jBangunMalam = 0
+				A[n-1].mBangunMalam = 0
+				fmt.Println("Data berhasil dihapus :)")
+				fmt.Print("Apakah ingin berhenti?(true/false) ");fmt.Scan(&stop)
+				if stop == false{
+					fmt.Print("Hari ke berapa yang ingin dihapus? ");fmt.Scan(&n)
+				}
+			}
+		} 
+	}else if perubahan == "ubah"{								//apabila ingin merubah
+		fmt.Print("Hari ke berapa yang ingin dirubah? ");fmt.Scan(&n)
+		fmt.Print("Apa yang ingin dirubah?(tidur siang(siang)/tidur malam(malam)) ");fmt.Scan(&tidur)
+		
+		if tidur == "siang"{
+			for stop == false{
+				fmt.Println("Hari ke-", n)
+				fmt.Println("Silahkan isi jurnal dengan format (jam tidur siang menit tidur siang jam bangun siang menit bangun siang)")
+					fmt.Scan(&A[n-1].jTidurSiang, &A[n-1].mTidurSiang, &A[n-1].jBangunSiang, &A[n-1].mBangunSiang)
+					fmt.Println("Data berhasil diubah :)")
+					fmt.Println("Apakah ingin berhenti?(true/false) ");fmt.Scan(&stop)
+					if stop == false{
+						fmt.Print("Hari ke berapa yang ingin dirubah? ");fmt.Scan(&n)
+					}
+			}
+		}else if tidur == "malam"{
+			for stop == false{
+				fmt.Println("Hari ke-", n)
+				fmt.Println("Silahkan isi jurnal dengan format (jam tidur malam, menit tidur malam, jam bangun malam, menit bangun malam)")
+					fmt.Scan(&A[n-1].jTidurMalam, &A[n-1].mTidurMalam, &A[n-1].jBangunMalam, &A[n-1].mBangunMalam)
+					fmt.Println("Data berhasil diubah :)")
+					fmt.Println("Apakah ingin berhenti?(true/false) ");fmt.Scan(&stop)
+					if stop == false{
+						fmt.Print("Hari ke berapa yang ingin dirubah? ");fmt.Scan(&n)
+					}
+			}
+		}
+	}
+	
+}
