@@ -70,6 +70,7 @@ func main() {
 
 //pengisian jurnal
 	isiJurnal(&A, &n)
+	durasi(&A, &n)
 
 //bagian pemilihan apa yang ingin ditampilkan
 	for milih != 9 {
@@ -139,7 +140,7 @@ func isiJurnal(A *tabTidur, n *int){
 /*I.S terdapat array kosong sebagai tempat untuk menyimpan durasi tidur
 F.S array durasi tidur terisi oleh jam tidur, menit tidur, jam bangun, menit bangun selama n hari */
 	
-	var i,j int
+	var i int
 	var tSiang bool
 	//pengondisian apabila n melebihi NMAX
 	if *n > NMAX{
@@ -147,8 +148,8 @@ F.S array durasi tidur terisi oleh jam tidur, menit tidur, jam bangun, menit ban
 	}
 
 	for i = 0; i < *n; i++{
-		j = i+1
-		fmt.Println("Hari ke-", j )
+		A[i].hari = i+1
+		fmt.Println("Hari ke-", A[i].hari )
 		fmt.Print("Apakah anda tidur siang?(true/false) ");fmt.Scan(&tSiang)
 
 		//Pengondisian apakah pengguna melakukan tidur siang atau tidak
@@ -329,7 +330,6 @@ func durasi(A *tabTidur, n *int) {
 		A[i].selisihTidurSiang = A[i].totalBangunSiang - A[i].totalTidurSiang
 		A[i].durasiJamSiang = A[i].selisihTidurSiang / 60
 		A[i].durasiMenitSiang = A[i].selisihTidurSiang % 60
-
 	}
 }
 
@@ -369,29 +369,29 @@ func saran(A *tabTidur, n int) {
 
         //subprogram untuk menampilkan waktu tidur tercepat atau terlama
 func min(A *tabTidur, n int) {
-	var i, idxMin, minDurasi int
-	minDurasi = A[0].selisihTidurSiang + A[0].selisihTidurMalam
+	var i, idxMin, minDurasi,total int
 	idxMin = 0
+	minDurasi = A[idxMin].selisihTidurSiang + A[idxMin].selisihTidurMalam
 
-	for i = 1; i < n; i++ {
-		total := A[i].selisihTidurSiang + A[i].selisihTidurMalam
-		if total < minDurasi {
+	for i = 0; i < n; i++ {
+		total = A[i].selisihTidurSiang + A[i].selisihTidurMalam
+		if minDurasi > total {
 			minDurasi = total
 			idxMin = i
 		}
 	}
 	fmt.Println("Anda tidur paling cepat pada hari ke-", A[idxMin].hari,
-		"selama", minDurasi/60, "jam", minDurasi%60, "menit")
+		"selama", (A[idxMin].selisihTidurSiang + A[idxMin].selisihTidurMalam)/60, "jam", (A[idxMin].selisihTidurSiang + A[idxMin].selisihTidurMalam)%60, "menit")
 }
 
 func max(A *tabTidur, n int) {
 	var i, idxMax, maxDurasi int
-	maxDurasi = A[0].selisihTidurSiang + A[0].selisihTidurMalam
 	idxMax = 0
+	maxDurasi = A[idxMax].selisihTidurSiang + A[idxMax].selisihTidurMalam
 
 	for i = 1; i < n; i++ {
 		total := A[i].selisihTidurSiang + A[i].selisihTidurMalam
-		if total > maxDurasi {
+		if maxDurasi < total {
 			maxDurasi = total
 			idxMax = i
 		}
