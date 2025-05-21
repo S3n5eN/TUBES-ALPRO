@@ -132,6 +132,15 @@ func main() {
 		case 8:
 			if n == 30 {
 				durasi(&A, &n)
+				printDurasi(&A, &n)
+
+				min(&A, n)
+				fmt.Println()
+				max(&A, n)
+				fmt.Println()
+
+				saran(&A, n)
+
 			} else {
 				fmt.Println("Mohon Maaf,Data yang anda masukkan kurang dari 30 hari,silahkan pilih no-1 untuk menambah riwayat Tidur")
 			}
@@ -602,3 +611,4 @@ func printDurasi(A *tabTidur, n *int) {
 	}
 
 }
+
