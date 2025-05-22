@@ -232,7 +232,7 @@ func ubahJurnal(A *tabTidur, batas *int, perubahan string) {
 					fmt.Println("Silahkan isi jurnal dengan format (jam tidur siang menit tidur siang jam bangun siang menit bangun siang)")
 					fmt.Scan(&A[n-1].jTidurSiang, &A[n-1].mTidurSiang, &A[n-1].jBangunSiang, &A[n-1].mBangunSiang)
 					*batas = n
-					A[n-1] = n
+					A[n-1].hari = n
 					fmt.Println("Data berhasil ditambahkan :)")
 					fmt.Println("Apakah ingin berhenti?(true/false) ")
 					fmt.Scan(&stop)
@@ -250,7 +250,7 @@ func ubahJurnal(A *tabTidur, batas *int, perubahan string) {
 					fmt.Println("Silahkan isi jurnal dengan format (jam tidur malam menit tidur malam jam bangun malam menit bangun malam)")
 					fmt.Scan(&A[n-1].jTidurMalam, &A[n-1].mTidurMalam, &A[n-1].jBangunMalam, &A[n-1].mBangunMalam)
 					*batas = n
-					A[n-1] = n
+					A[n-1].hari = n
 					fmt.Println("Data berhasil ditambahkan :)")
 					fmt.Println("Apakah ingin berhenti?(true/false) ")
 					fmt.Scan(&stop)
