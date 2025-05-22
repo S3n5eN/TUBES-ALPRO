@@ -88,9 +88,9 @@ func main() {
 			fmt.Print("tercepat atau terlama?: ")
 			fmt.Scan(&maxmin)
 			if maxmin == "tercepat" || maxmin == "Tercepat" {
-				min(&A, n)
+				min(A, n)
 			} else {
-				max(&A, n)
+				max(A, n)
 			}
 		case 4:
 			fmt.Print("Masukan tanggal yang ingin dicari: ")
@@ -116,11 +116,11 @@ func main() {
 			urutTanggal(A, tgl1, tgl2)
 		case 7:
 			durasi(&A, &n)
-			printDurasi(&A, &n)
+			printDurasi(A, n)
 
-			min(&A, n)
+			min(A, n)
 			fmt.Println()
-			max(&A, n)
+			max(A, n)
 			fmt.Println()
 
 			saran(&A, n, intensitas, durasio)
@@ -426,7 +426,7 @@ func saran(A *tabTidur, n int, intensitas string, durasio int) {
 }
 
 //subprogram untuk menampilkan waktu tidur tercepat atau terlama
-func min(A *tabTidur, n int) {
+func min(A tabTidur, n int) {
 	var i, idxMin, minDurasi, total int
 	idxMin = 0
 	minDurasi = A[idxMin].selisihTidurSiang + A[idxMin].selisihTidurMalam
@@ -442,13 +442,13 @@ func min(A *tabTidur, n int) {
 		"selama", (A[idxMin].selisihTidurSiang+A[idxMin].selisihTidurMalam)/60, "jam", (A[idxMin].selisihTidurSiang+A[idxMin].selisihTidurMalam)%60, "menit")
 }
 
-func max(A *tabTidur, n int) {
-	var i, idxMax, maxDurasi int
+func max(A tabTidur, n int) {
+	var i, idxMax, maxDurasi, total int
 	idxMax = 0
 	maxDurasi = A[idxMax].selisihTidurSiang + A[idxMax].selisihTidurMalam
 
 	for i = 1; i < n; i++ {
-		total := A[i].selisihTidurSiang + A[i].selisihTidurMalam
+		total = A[i].selisihTidurSiang + A[i].selisihTidurMalam
 		if (maxDurasi < total) && (total != 0) {
 			maxDurasi = total
 			idxMax = i
@@ -630,7 +630,7 @@ func urutTanggal(A tabTidur, n1 int, n2 int) {
 }
 
 //prosedur untuk rekapitulasi durasi tidur selama n hari
-func printDurasi(A *tabTidur, n *int) {
+func printDurasi(A tabTidur, n int) {
 	var i, j int
 	for i = 0; i < *n; i++ {
 		j = i + 1
