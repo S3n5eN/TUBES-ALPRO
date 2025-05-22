@@ -535,8 +535,11 @@ func descending(A *tabTidur, n int) {
 			i = i + 1
 		}
 		temp.descending = A[pass-1].descending
+		temp.hari = A[pass-1].hari
 		A[pass-1].descending = A[idx].descending
+		A[pass-1].hari = A[idx].hari
 		A[idx].descending = temp.descending
+		A[idx].hari = temp.hari
 		pass = pass + 1
 	}
 }
@@ -546,6 +549,11 @@ func printdescending(A *tabTidur, n int) {
 	for i = 0; i < n; i++ {
 
 		fmt.Println("pada hari ke-", A[i].hari, "Anda tidur selama ", A[i].descending/60, " jam", A[i].descending%60, " menit")
+	}
+
+	//untuk perubahan kembali array tanggal ke bentuk semula
+	for i = 0; i < n;i++{
+		A[i].hari = i+1
 	}
 }
 
@@ -570,8 +578,11 @@ func ascending(A *tabTidur, n int) {
 			i = i + 1
 		}
 		temp.ascending = A[pass-1].ascending
+		temp.hari = A[pass-1].hari
 		A[pass-1].ascending = A[idx].ascending
+		A[pass-1].hari = A[idx].hari
 		A[idx] .ascending= temp.ascending
+		A[idx].hari = temp.hari
 
 		pass = pass + 1
 
@@ -583,6 +594,11 @@ func printascending(A *tabTidur, n int) {
 	for i = 0; i < n; i++ {
 
 		fmt.Println("pada hari ke-", A[i].hari, "Anda tidur selama ", A[i].ascending/60, " jam", A[i].ascending%60, " menit")
+	}
+
+	//untuk perubahan kembali array tanggal ke bentuk semula
+	for i = 0; i < n;i++{
+		A[i].hari = i+1
 	}
 }
 
