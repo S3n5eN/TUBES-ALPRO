@@ -38,7 +38,7 @@ type tabTidur [NMAX]jurnal
 //func main
 func main() {
 	var A tabTidur
-	var nama, aktivitas, intensitas string
+	var nama, intensitas string
 	var usia int
 	var milih, durasio int
 	var n int
@@ -55,8 +55,6 @@ func main() {
 	fmt.Scan(&nama)
 	fmt.Print("Usia: ")
 	fmt.Scan(&usia)
-	fmt.Print("Aktivitas(Ringan/Sedang/Berat): ")
-	fmt.Scan(&aktivitas)
 	fmt.Print("Durasi Olahraga dalam Seminggu(menit): ")
 	fmt.Scan(&durasio)
 	fmt.Print("Intensitas Olahraga(Ringan/Berat): ")
@@ -620,4 +618,3 @@ func printDurasi(A *tabTidur, n *int) {
 	}
 
 }
-
