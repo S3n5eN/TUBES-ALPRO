@@ -128,11 +128,11 @@ func main() {
 		case 8:
 			if n == 30 {
 				durasi(&A, &n)
-				printDurasi(&A, &n)
+				printDurasi(A, n)
 
-				min(&A, n)
+				min(A, n)
 				fmt.Println()
-				max(&A, n)
+				max(A, n)
 				fmt.Println()
 
 				saran(&A, n, intensitas, durasio)
