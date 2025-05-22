@@ -433,7 +433,7 @@ func min(A *tabTidur, n int) {
 
 	for i = 0; i < n; i++ {
 		total = A[i].selisihTidurSiang + A[i].selisihTidurMalam
-		if minDurasi > total {
+		if (minDurasi > total) && (total != 0) {
 			minDurasi = total
 			idxMin = i
 		}
@@ -449,7 +449,7 @@ func max(A *tabTidur, n int) {
 
 	for i = 1; i < n; i++ {
 		total := A[i].selisihTidurSiang + A[i].selisihTidurMalam
-		if maxDurasi < total {
+		if (maxDurasi < total) && (total != 0) {
 			maxDurasi = total
 			idxMax = i
 		}
