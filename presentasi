@@ -529,9 +529,9 @@ func descending(A *tabTidur, n int) {
 			}
 			i = i + 1
 		}
-		temp = A[pass-1]
-		A[pass-1] = A[idx]
-		A[idx] = temp
+		temp.descending = A[pass-1].descending
+		A[pass-1].descending = A[idx].descending
+		A[idx].descending = temp.descending
 		pass = pass + 1
 	}
 }
@@ -564,9 +564,9 @@ func ascending(A *tabTidur, n int) {
 			}
 			i = i + 1
 		}
-		temp = A[pass-1]
-		A[pass-1] = A[idx]
-		A[idx] = temp
+		temp.ascending = A[pass-1].ascending
+		A[pass-1].ascending = A[idx].ascending
+		A[idx] .ascending= temp.ascending
 
 		pass = pass + 1
 
