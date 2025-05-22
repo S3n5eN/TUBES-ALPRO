@@ -632,7 +632,7 @@ func urutTanggal(A tabTidur, n1 int, n2 int) {
 //prosedur untuk rekapitulasi durasi tidur selama n hari
 func printDurasi(A tabTidur, n int) {
 	var i, j int
-	for i = 0; i < *n; i++ {
+	for i = 0; i < n; i++ {
 		j = i + 1
 
 		fmt.Println("Pada Tanggal", j, " Anda Tidur Malam Selama ", A[i].durasiJamMalam, "jam ", A[i].durasiMenitMalam, " Menit")
