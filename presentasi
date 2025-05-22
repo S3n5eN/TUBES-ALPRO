@@ -414,6 +414,8 @@ func saran(A *tabTidur, n int, intensitas string, durasio int) {
 		fmt.Println("\nDurasi olahraga anda dalam seminggu kurang dari 75 menit, Ayo perbaiki!")
 		fmt.Println("Apabila anda kurang olahraga,anda akan terkena beberapa dampak negatif,seperti:")
 		fmt.Println("1.Berat badan naik\n2.Metabolisme melambat\n3.Insomnia\n4.Mudah lelah\n5.Rentan terkena penyakit kronis")
+	} else {
+		fmt.Println("\nDurasi Olahraga anda cukup,Ayo pertahankan!")
 	}
 
 }
@@ -618,3 +620,4 @@ func printDurasi(A *tabTidur, n *int) {
 	}
 
 }
+
