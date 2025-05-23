@@ -277,6 +277,7 @@ func ubahJurnal(A *tabTidur, batas *int, perubahan string) {
 	} else if perubahan == "hapus" { //Apabila ingin menghapuskan
 		fmt.Print("Tanggal berapa yang ingin dihapus? ")
 		fmt.Scan(&n)
+		if n <= NMAX{
 		for stop == false && n <= NMAX {
 			fmt.Print("Apa yang ingin dihapus?(tidur siang(siang)/tidur malam(malam)) ")
 			fmt.Scan(&tidur)
@@ -292,6 +293,9 @@ func ubahJurnal(A *tabTidur, batas *int, perubahan string) {
 				if stop == false {
 					fmt.Print("Tanggal berapa yang ingin dihapus? ")
 					fmt.Scan(&n)
+					if n > NMAX{
+					fmt.Println("Melebihi kapasitas maximal 30 hari")
+					}
 				}
 
 			} else if tidur == "malam" {
@@ -305,16 +309,20 @@ func ubahJurnal(A *tabTidur, batas *int, perubahan string) {
 				if stop == false {
 					fmt.Print("Tanggal berapa yang ingin dihapus? ")
 					fmt.Scan(&n)
+					if n > NMAX{
+					fmt.Println("Melebihi kapasitas maximal 30 hari")
+					}
 				}
 
 			}
 		}
-		if n > NMAX {
+		}else if n > NMAX {
 			fmt.Println("Melebihi kapasitas maximal 30 hari")
 		}
 	} else if perubahan == "ubah" { //apabila ingin merubah
 		fmt.Print("Tanggal berapa yang ingin dirubah? ")
 		fmt.Scan(&n)
+		if n <= NMAX{
 		for stop == false && n <= NMAX {
 			fmt.Print("Apa yang ingin dirubah?(tidur siang(siang)/tidur malam(malam)) ")
 			fmt.Scan(&tidur)
@@ -329,6 +337,9 @@ func ubahJurnal(A *tabTidur, batas *int, perubahan string) {
 				if stop == false {
 					fmt.Print("Tanggal berapa yang ingin dirubah? ")
 					fmt.Scan(&n)
+					if n > NMAX{
+					fmt.Println("Melebihi kapasitas maximal 30 hari")
+					}
 				}
 
 			} else if tidur == "malam" {
@@ -341,11 +352,14 @@ func ubahJurnal(A *tabTidur, batas *int, perubahan string) {
 				if stop == false {
 					fmt.Print("Tanggal berapa yang ingin dirubah? ")
 					fmt.Scan(&n)
+					if n > NMAX{
+					fmt.Println("Melebihi kapasitas maximal 30 hari")
+					}
 				}
 
 			}
 		}
-		if n > NMAX {
+		}else if n > NMAX {
 			fmt.Println("Melebihi kapasitas maximal 30 hari")
 		}
 	}
