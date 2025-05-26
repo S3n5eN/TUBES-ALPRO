@@ -195,7 +195,7 @@ func pilih() {
 	fmt.Println("1.Ubah riwayat tidur")
 	fmt.Println("2.Saran Pola Tidur")
 	fmt.Println("3.Jam Tidur paling lama dan paling sebentar")
-	fmt.Println("4.Mencari data tidur pada hari ke-n")
+	fmt.Println("4.Mencari data tidur pada tanggal ke-n")
 	fmt.Println("5.Mengurutkan riwayat tidur berdasarkan durasi selama n hari")
 	fmt.Println("6.Mengurutkan riwayat tidur berdasakan tanggal n ke n")
 	fmt.Println("7.Rekapitulasi riwayat tidur dalam n hari")
@@ -562,7 +562,7 @@ func printdescending(A *tabTidur, n int) {
 	var i int
 	for i = 0; i < n; i++ {
 
-		fmt.Println("pada hari ke-", A[i].hari, "Anda tidur selama ", A[i].descending/60, " jam", A[i].descending%60, " menit")
+		fmt.Println("pada tanggal ke-", A[i].hari, "Anda tidur selama ", A[i].descending/60, " jam", A[i].descending%60, " menit")
 	}
 
 	//untuk perubahan kembali array tanggal ke bentuk semula
@@ -607,7 +607,7 @@ func printascending(A *tabTidur, n int) {
 	var i int
 	for i = 0; i < n; i++ {
 
-		fmt.Println("pada hari ke-", A[i].hari, "Anda tidur selama ", A[i].ascending/60, " jam", A[i].ascending%60, " menit")
+		fmt.Println("pada tanggal ke-", A[i].hari, "Anda tidur selama ", A[i].ascending/60, " jam", A[i].ascending%60, " menit")
 	}
 
 	//untuk perubahan kembali array tanggal ke bentuk semula
