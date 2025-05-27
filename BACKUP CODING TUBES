@@ -86,35 +86,47 @@ func main() {
 			durasi(&A, &n)
 			saran(&A, n, intensitas, durasio)
 		case 3:
-			fmt.Print("tercepat atau terlama?: ")
+			fmt.Print("tercepat atau terlama?(-1 untuk cancel): ")
 			fmt.Scan(&maxmin)
 			if maxmin == "tercepat" || maxmin == "Tercepat" {
 				min(A, n)
-			} else {
+			} else if maxmin == "terlama" || maxmin == "Terlama" {
 				max(A, n)
+			}else if maxmin == "-1"{
+
 			}
 		case 4:
-			fmt.Print("Masukan tanggal yang ingin dicari: ")
+			fmt.Print("Masukan tanggal yang ingin dicari:(-1 untuk cancel) ")
 			fmt.Scan(&tgl)
+			if tgl != -1{
 			mencariDataTidur(A, n, tgl)
+			}else{
+
+			}
 		case 5:
-			fmt.Print("Ascending/Descending?: ")
+			fmt.Print("Ascending/Descending?:(-1 untuk cancel) ")
 			fmt.Scan(&urut)
 
 			if urut == "Descending" || urut == "descending" || urut == "DESCENDING" {
 				durasi(&A, &n)
 				descending(&A, n)
 				printdescending(&A, n)
-			} else {
+			} else if urut == "Ascending" || urut == "ascending" || urut == "ASCENDING" {
 				durasi(&A, &n)
 				ascending(&A, n)
 				printascending(&A, n)
+			}else if urut == "-1"{
+
 			}
 
 		case 6:
-			fmt.Print("Ingin mengurutkan dari tanggal berapa sampai tanggal berapa? ")
+			fmt.Print("Ingin mengurutkan dari tanggal berapa sampai tanggal berapa?(-1 untuk cancel) ")
 			fmt.Scan(&tgl1, &tgl2)
+			if (tgl1 != -1)&&(tgl2!=-1){ 
 			urutTanggal(A, tgl1, tgl2)
+			}else{
+				
+			}
 		case 7:
 			durasi(&A, &n)
 			printDurasi(A, n)
